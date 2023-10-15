@@ -1,0 +1,1 @@
+My attempt to understand how the kernel density estimator works and some examples with real data.
