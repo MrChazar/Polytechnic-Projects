@@ -10,6 +10,7 @@ def create_teams(number):
             teams.append([team_sign, random.random(), 0])
     return teams
 
+
 def probability_a(rka, rkb, e):
     return rka / (rka + rkb + (1 / 3) * ((rka + rkb) / (abs(rka - rkb) + e)))
 
@@ -35,9 +36,9 @@ def match(teamA, teamB, e):
     print("Wartość prawdopodobieństwa AB:", prob_ab)
     """
 
-    if random_numb > prob_a:
+    if random_numb < prob_a:
         teamA[2] += 3
-    elif random_numb > prob_b:
+    elif random_numb < (prob_b+prob_a):
         teamB[2] += 3
     else:
         teamA[2] += 1

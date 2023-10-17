@@ -18,7 +18,9 @@ def match(team_a, team_b):
     else:
         return team_b
 
-def simulation(teams):
+
+def simulation(team):
+    teams = team
     while len(teams) != 1:
         temp = []
         print(f"Before match: {teams}")
@@ -26,5 +28,7 @@ def simulation(teams):
             temp.append(match(teams[i], teams[len(teams) - i - 1]))
         teams = temp
         print(f"After match: {teams}")
+    index = team.index(teams[0])
+    team[index][2] += 1
     return teams[0][1]
 
