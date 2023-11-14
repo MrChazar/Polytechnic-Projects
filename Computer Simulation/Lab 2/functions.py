@@ -1,5 +1,6 @@
 import random
 import math
+import matplotlib.pyplot as plt
 
 
 def determine_score(distance):
@@ -19,24 +20,38 @@ def determine_score(distance):
         return 0
 
 
-def generate_shield():
-    array = []
-    for y in range(20, -21, -1):
-        row = []
-        for x in range(-20, 21):
-            distance = math.sqrt((x / 20) ** 2 + (y / 20) ** 2)
-            score = determine_score(distance)
-            row.append(score)
-        array.append(row)
-    for row in array:
-        print(row)
-    return array
+def generate_shield(coordinates, x=[], y=[], x_1=[], y_1=[],  rays=None, type="single_a"):
+    if rays is None:
+        rays = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+    fig, ax = plt.subplots()
+    for radius in rays:
+        circle = plt.Circle(coordinates, radius, edgecolor='b', facecolor='none')
+        ax.add_patch(circle)
+
+    ax.set_aspect('equal', adjustable='box')
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    if type == "single_a":
+        plt.scatter(x, y, color='red', label='Points')
+        plt.title("Shoot A:")
+    if type == "single_b":
+        plt.scatter(x, y, color='blue', label='Points')
+        plt.title("Shoot B:")
+    if type == "multiple":
+        plt.scatter(x, y, color='red', label='Points A')
+        plt.scatter(x_1, y_1, color='blue', label='Points B')
+
+    plt.xlabel("axis X")
+    plt.ylabel("axis Y")
+    plt.grid(True)
+    plt.show()
 
 
 def shoot_a():
     x = random.uniform(-0.75, 0.75)
     y = random.uniform(-0.75, 0.75)
-    return [x, y]
+    r = math.sqrt(pow(x,2) + pow(y,2) )
+    return [x, y, r]
 
 
 def shoot_b():
@@ -44,24 +59,35 @@ def shoot_b():
     phi = random.uniform(-3.14, 3.14)
     x = r*math.cos(phi)
     y = r*math.sin(phi)
-    return [x,y]
+    return [x, y, r]
 
 
-def simulation(shield, type_of_shoot):
+def simulation(type_of_shoot):
     temp = 0
+    x_points = []
+    y_points = []
     for _ in range(10):
         if type_of_shoot == "A":
-            x, y = shoot_a()
+            x, y, r = shoot_a()
+            temp += (determine_score(r))
+            x_points.append(x)
+            y_points.append(y)
         elif type_of_shoot == "B":
-            x, y = shoot_b()
-        # Normalization to -1 to 1
-        x_norm = int(20 * x)
-        y_norm = int(20 * y)
-        # checking score
-        if -20 <= x_norm <= 20 and -20 <= y_norm <= 20:
-            score = shield[20 - y_norm][x_norm + 20]
-            print(f"Hit at coordinate ({x_norm / 20}, {y_norm / 20}) score: {score}")
-            temp += score
-        else:
-            print("beyond shooting shield")
-    return temp/10
+            x, y, r = shoot_b()
+            temp += (determine_score(r))
+            x_points.append(x)
+            y_points.append(y)
+    return [temp/10, x_points, y_points]
+
+
+def generate_histogram(avg_a, avg_b):
+    fig, axs = plt.subplots(1, 2)
+
+    axs[0].hist(avg_a, bins=15, color='blue', alpha=0.7)
+    axs[0].set_title("Shooting Range A")
+
+    axs[1].hist(avg_b, bins=15, color='red', alpha=0.7)
+    axs[1].set_title("Shooting Range B")
+
+    plt.tight_layout()
+    plt.show()

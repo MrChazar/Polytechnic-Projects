@@ -8,7 +8,7 @@ def K(x):
     return np.exp(-x ** 2 / 2) / np.sqrt(2 * np.pi)
 
 # dummy dataset
-dataset = np.random.uniform(0, 5, 20)
+dataset = np.random.uniform(0, 5, 2)
 
 # x-value range for plotting KDEs
 x_range = np.linspace(dataset.min() - 0.3, dataset.max() + 0.3, num=600)
