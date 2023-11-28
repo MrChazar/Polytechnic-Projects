@@ -66,27 +66,27 @@ def shoot_b():
 
 
 def simulation(type_of_shoot):
-    temp = 0
+    temp = []
     x_points = []
     y_points = []
     for _ in range(10):
         if type_of_shoot == "A":
             x, y, r = shoot_a()
-            temp += (determine_score(r))
+            temp.append(determine_score(r))
             x_points.append(x)
             y_points.append(y)
         elif type_of_shoot == "B":
             x, y, r = shoot_b()
-            temp += (determine_score(r))
+            temp.append(determine_score(r))
             x_points.append(x)
             y_points.append(y)
-    return [temp/10, x_points, y_points]
+    return [temp, x_points, y_points]
 
 
 def generate_histogram(avg_a, avg_b):
     fig, axs = plt.subplots(1, 2)
 
-    axs[0].hist(avg_a, bins=15, color='blue', alpha=0.7)
+    axs[0].hist(avg_a, bins=15, color='blue', alpha=0.7, )
     axs[0].set_title("Shooting Range A")
 
     axs[1].hist(avg_b, bins=15, color='red', alpha=0.7)

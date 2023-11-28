@@ -7,9 +7,9 @@ Configuration file for a proper setting up a simulation
 """
 
 # setting number of simulations
-number_of_simulations = 31
+number_of_simulations = 100
 # confidence level
-confidence_level = 0.01
+confidence_level = 0.05
 
 
 # shoot A
@@ -18,7 +18,7 @@ x_a = []
 y_a = []
 for a in range(number_of_simulations):
     score, x_temp, y_temp = f.simulation(type_of_shoot='A')
-    avg_a.append(score)
+    avg_a += score
     x_a += x_temp
     y_a += y_temp
 f.generate_shield((0,0), x=x_a, y=y_a, type="single_a")
@@ -29,7 +29,7 @@ x_b = []
 y_b = []
 for b in range(number_of_simulations):
     score, x_temp, y_temp = f.simulation(type_of_shoot='B')
-    avg_b.append(score)
+    avg_b += score
     x_b += x_temp
     y_b += y_temp
 f.generate_shield((0,0), x=x_b, y=y_b, type="single_b")
@@ -47,7 +47,7 @@ print(f"Average for shooting range b { sum(avg_b)/ len(avg_b) }")
 # Testing our hypothesis avg_a is from normal distribution
 # Ho avg_a is from normal distribution
 # Ha avg_a isn't from normal distribution
-
+print('Dla strzału A:')
 t_stat, p_value = stats.shapiro(avg_a)
 print(f"Statystyka t: {t_stat}")
 print(f"P-wartość: {p_value}")
@@ -63,7 +63,8 @@ else:
 # Ho avg_b is from normal distribution
 # Ha avg_b isn't from normal distribution
 
-t_stat, p_value = stats.shapiro(avg_b)
+print('Dla strzału B:')
+res = stats.shapiro(avg_b)
 print(f"Statystyka t: {t_stat}")
 print(f"P-wartość: {p_value}")
 
