@@ -9,7 +9,7 @@ Configuration file for a proper setting up a simulation
 # setting number of simulations
 number_of_simulations = 31
 # confidence level
-confidence_level = 0.05
+confidence_level = 0.01
 
 
 # shoot A
