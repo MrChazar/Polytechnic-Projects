@@ -30,17 +30,17 @@ def generate_shield(coordinates, x=[], y=[], x_1=[], y_1=[],  rays=None, type="s
         ax.add_patch(circle)
 
     ax.set_aspect('equal', adjustable='box')
-    ax.set_xlim(-1, 1)
-    ax.set_ylim(-1, 1)
+   # ax.set_xlim(-1, 1)
+   # ax.set_ylim(-1, 1)
     if type == "single_a":
-        plt.scatter(x, y, color='red', label='Points')
+        plt.scatter(x, y, color='red', label='Points', s=10)
         plt.title("Shoot A:")
     if type == "single_b":
-        plt.scatter(x, y, color='blue', label='Points')
+        plt.scatter(x, y, color='blue', label='Points', s=10)
         plt.title("Shoot B:")
     if type == "multiple":
-        plt.scatter(x, y, color='red', label='Points A')
-        plt.scatter(x_1, y_1, color='blue', label='Points B')
+        plt.scatter(x, y, color='red', label='Points A', s=10)
+        plt.scatter(x_1, y_1, color='blue', label='Points B', s=10)
 
     plt.xlabel("axis X")
     plt.ylabel("axis Y")
@@ -49,10 +49,10 @@ def generate_shield(coordinates, x=[], y=[], x_1=[], y_1=[],  rays=None, type="s
 
 
 def shoot_a():
-    d_x = np.random.normal(0,1)
+    d_x = np.random.normal(0, 1)
     x = random.uniform(-0.75, 0.75)
     y = random.uniform(-0.75, 0.75)
-    r = math.sqrt(pow(x,2) + pow(y,2) )
+    r = math.sqrt(pow(x + d_x,2) + pow(y,2) )
     return [x+d_x, y, r]
 
 
@@ -86,10 +86,10 @@ def simulation(type_of_shoot):
 def generate_histogram(avg_a, avg_b):
     fig, axs = plt.subplots(1, 2)
 
-    axs[0].hist(avg_a, bins=15, color='blue', alpha=0.7, )
+    axs[0].hist(avg_a, bins=15, color='red', alpha=0.7, )
     axs[0].set_title("Shooting Range A")
 
-    axs[1].hist(avg_b, bins=15, color='red', alpha=0.7)
+    axs[1].hist(avg_b, bins=15, color='blue', alpha=0.7)
     axs[1].set_title("Shooting Range B")
 
     plt.tight_layout()

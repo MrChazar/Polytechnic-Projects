@@ -7,7 +7,7 @@ Configuration file for a proper setting up a simulation
 """
 
 # setting number of simulations
-number_of_simulations = 100
+number_of_simulations = 10
 # confidence level
 confidence_level = 0.05
 
@@ -34,8 +34,10 @@ for b in range(number_of_simulations):
     y_b += y_temp
 f.generate_shield((0,0), x=x_b, y=y_b, type="single_b")
 
+
 # Plot with combined Shot A and B
 f.generate_shield((0,0), x=x_a, y=y_a, x_1=x_b, y_1=y_b, type="multiple")
+
 
 # Creating Plots to compare both shootings methods
 f.generate_histogram(avg_a, avg_b)
@@ -47,6 +49,8 @@ print(f"Average for shooting range b { sum(avg_b)/ len(avg_b) }")
 # Testing our hypothesis avg_a is from normal distribution
 # Ho avg_a is from normal distribution
 # Ha avg_a isn't from normal distribution
+
+"""
 print('Dla strzału A:')
 t_stat, p_value = stats.shapiro(avg_a)
 print(f"Statystyka t: {t_stat}")
@@ -55,8 +59,9 @@ print(f"P-wartość: {p_value}")
 if p_value > confidence_level:
     print("Nie mamy wystarczających dowodów aby odrzucić H0")
 else:
-    print("Mamy wystarczający dowód aby odrzucić H0 przyjmujemy hipotezę alternatywną Ha czyli avg_a != avg_b")
-
+    print("Mamy wystarczający dowód aby odrzucić H0 przyjmujemy hipotezę alternatywną Ha czyli "
+          "avg_a nie jest z rozkładu normalnego")
+"""
 
 # Statistical Test for B
 # Testing our hypothesis avg_b is from normal distribution
@@ -64,12 +69,13 @@ else:
 # Ha avg_b isn't from normal distribution
 
 print('Dla strzału B:')
-res = stats.shapiro(avg_b)
+t_stat, p_value = stats.shapiro(avg_b)
 print(f"Statystyka t: {t_stat}")
 print(f"P-wartość: {p_value}")
 
 if p_value > confidence_level:
     print("Nie mamy wystarczających dowodów aby odrzucić H0")
 else:
-    print("Mamy wystarczający dowód aby odrzucić H0 przyjmujemy hipotezę alternatywną Ha czyli avg_a != avg_b")
+    print("Mamy wystarczający dowód aby odrzucić H0 przyjmujemy hipotezę alternatywną "
+          "Ha czyli dane b nie są z rozkładu normalnego")
 
